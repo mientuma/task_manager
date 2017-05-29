@@ -1,11 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    <div class="main">
+        <div class="under"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span><br/>Tematy bieżące</div>
+        <div class="under"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><br/>Kosztorysy ofertowe</div>
+        <div class="under"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span><br/>Rozliczenia</div>
+        <div class="under"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><br/>Zamówienia</div>
+        <div style="clear: both"></div>
+    </div>
 {% endblock %}
 
-
-
 {% block stylesheets %}
+<style>
+    .main
+    {
+        min-height: 80%;
+        min-width: 80%;
+        border: 2px solid red;
+    }
 
+    .under
+    {
+        border: 2px solid red;
+        text-align: center;
+        min-height: 50%;
+        min-width: 50%;
+        float: left;
+        font-size: 40px;
+    }
+</style>
 {% endblock %}
