@@ -5,3 +5,8 @@ body
     background-color: #9d9d9d;
     margin: 0 !important;
 }
+
+.spacing
+{
+    line-height: 12px;
+}
