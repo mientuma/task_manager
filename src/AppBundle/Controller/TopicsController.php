@@ -6,14 +6,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+
+class TopicsController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/topics", name="topics")
      * @Security("has_role('ROLE_USER')")
      */
     public function indexAction()
     {
-        return $this->render('default/index.html.twig');
+        return $this->render('topics/topics.html.twig');
     }
 }
