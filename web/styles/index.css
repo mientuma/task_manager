@@ -34,7 +34,7 @@
     min-width: 500px;
 }
 
-/* <----- End -----> */
+/* <----- Basics End -----> */
 
 .main
 {
@@ -55,8 +55,8 @@
     min-width: 499px;
     font-size: 40px;
     float: left;
-    border-right: 1px black solid;
-    border-bottom: 1px black solid;
+    border-right: 1px #303030 solid;
+    border-bottom: 1px #303030 solid;
 }
 
 .topics a
@@ -91,8 +91,8 @@
     min-width: 499px;
     font-size: 40px;
     float: left;
-    border-left: 1px black solid;
-    border-bottom: 1px black solid;
+    border-left: 1px #303030 solid;
+    border-bottom: 1px #303030 solid;
 }
 
 .estimates a
@@ -127,8 +127,8 @@
     min-width: 499px;
     font-size: 40px;
     float: left;
-    border-right: 1px black solid;
-    border-top: 1px black solid;
+    border-right: 1px #303030 solid;
+    border-top: 1px #303030 solid;
 }
 
 .reckons a
@@ -163,8 +163,8 @@
     min-width: 499px;
     font-size: 40px;
     float: left;
-    border-left: 1px black solid;
-    border-top: 1px black solid;
+    border-left: 1px #303030 solid;
+    border-top: 1px #303030 solid;
 }
 
 .orders a
