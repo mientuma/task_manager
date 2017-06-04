@@ -13,8 +13,17 @@ class TopicsController extends Controller
      * @Route("/topics", name="topics")
      * @Security("has_role('ROLE_USER')")
      */
-    public function indexAction()
+    public function topicsAction()
     {
         return $this->render('topics/topics.html.twig');
+    }
+
+    /**
+     * @Route("/topics/add", name="topicsAdd")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function topicsAddAction()
+    {
+        return $this->render('topics/topicsAdd.html.twig');
     }
 }
