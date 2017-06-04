@@ -49,6 +49,12 @@ class Topic
      */
     private $priority;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="note", type="string", length=5000)
+     */
+    private $note;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="addedTopic")
@@ -166,6 +172,30 @@ class Topic
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     *
+     * @return Topic
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
     }
 
     /**

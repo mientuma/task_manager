@@ -49,6 +49,12 @@ class Topic
      */
     private $priority;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="note", type="string", length=5000)
+     */
+    private $note;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="addedTopic")
