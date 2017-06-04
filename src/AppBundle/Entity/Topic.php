@@ -58,13 +58,13 @@ class Topic
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="addedTopic")
-     * @ORM\JoinColumn(name="user_added_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_added", referencedColumnName="id")
      */
     private $userAdded;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="responsibleTopic")
-     * @ORM\JoinColumn(name="user_responsible_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_responsible", referencedColumnName="id")
      */
     private $userResponsible;
 

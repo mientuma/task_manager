@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Topic;
+use AppBundle\Form\TopicType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,6 +26,10 @@ class TopicsController extends Controller
      */
     public function topicsAddAction()
     {
-        return $this->render('topics/topicsAdd.html.twig');
+        $topic = new Topic();
+        $form = $this->createForm(TopicType::class, $topic);
+        return $this->render('topics/topicsAdd.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 }
