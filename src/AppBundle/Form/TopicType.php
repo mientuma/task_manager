@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Topic;
+use AppBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,7 +24,9 @@ class TopicType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $currentUser = $options['user'];
+        $user = $options['user'];
+
+        dump($user);
 
         $builder
             ->add('name', TextType::class, array(
@@ -48,16 +51,17 @@ class TopicType extends AbstractType
                 'data' => 'priorityNormal'
             ))
             ->add('note', TextareaType::class, array(
-                'label' => 'Notatka'
+                'label' => 'Notatka',
+                'required' => false
             ))
-            ->add('user_added', HiddenType::class, array(
-                'data' => $currentUser
+            ->add('user_added', EntityType::class, array(
+                'class' => 'AppBundle\Entity\User',
+                'data' => $user
             ))
             ->add('user_responsible', EntityType::class, array(
                 'label' => 'Użytkownik odpowiedzialny',
                 'class' => 'AppBundle\Entity\User',
-                'choice_label' => 'username',
-                'data' => $currentUser,
+                'data' => $user,
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Zapisz'
@@ -68,7 +72,7 @@ class TopicType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Topic::class,
-            'user' => null
+            'user' => User::class
         ));
 
     }

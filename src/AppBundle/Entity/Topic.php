@@ -52,7 +52,7 @@ class Topic
     /**
      * @var string
      *
-     * @ORM\Column(name="note", type="string", length=5000)
+     * @ORM\Column(name="note", type="string", length=5000, nullable=true)
      */
     private $note;
 
