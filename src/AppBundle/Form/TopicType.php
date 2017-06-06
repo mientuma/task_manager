@@ -12,14 +12,21 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\User\User;
 
 class TopicType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $currentUser = $options['user'];
+
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, array(
+                'label' => 'Nazwa'
+            ))
             ->add('dateAdded', DateType::class, array(
                 'data' => new \DateTime()
             ))
@@ -27,19 +34,26 @@ class TopicType extends AbstractType
                 'widget' => 'choice',)
             )
             ->add('priority', ChoiceType::class, array(
+                'label' => 'Priorytet',
                 'choices' => array(
                     'Wysoki' => 'priorityHigh',
                     'Normalny' => 'priorityNormal',
                     'Niski' => 'priorityLow'
                 )
             ))
-            ->add('note', TextType::class)
+            ->add('note', TextType::class, array(
+                'label' => 'Notatka'
+            ))
             ->add('user_added', EntityType::class, array(
                 'class' => 'AppBundle\Entity\User',
-                'data' => User::class
+                'data' => $currentUser,
+                'disabled' => true
             ))
             ->add('user_responsible', EntityType::class, array(
-                'class' => 'AppBundle\Entity\User'
+                'label' => 'Użytkownik odpowiedzialny',
+                'class' => 'AppBundle\Entity\User',
+                'choice_label' => 'username',
+                'data' => $currentUser,
             ))
             ->add('save', SubmitType::class);
     }
@@ -48,6 +62,7 @@ class TopicType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Topic::class,
+            'user' => null
         ));
 
     }

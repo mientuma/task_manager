@@ -27,7 +27,9 @@ class TopicsController extends Controller
     public function topicsAddAction()
     {
         $topic = new Topic();
-        $form = $this->createForm(TopicType::class, $topic);
+        $form = $this->createForm(TopicType::class, $topic, [
+            'user' => $this->getUser()
+        ]);
         return $this->render('topics/topicsAdd.html.twig', array(
             'form' => $form->createView()
         ));
