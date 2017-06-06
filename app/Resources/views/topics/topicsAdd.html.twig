@@ -6,6 +6,12 @@
 
 {% block body %}
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.dateAdded) }}
+    {{ form_row(form.expiryDate) }}
+    {{ form_row(form.priority) }}
+    {{ form_row(form.user_responsible) }}
+    {{ form_row(form.note) }}
+    {{ form_row(form.save) }}
     {{ form_end(form) }}
 {% endblock %}

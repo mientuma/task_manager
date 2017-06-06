@@ -8,7 +8,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,26 +30,28 @@ class TopicType extends AbstractType
                 'label' => 'Nazwa'
             ))
             ->add('dateAdded', DateType::class, array(
+                'label' => 'Data dodania',
                 'data' => new \DateTime()
             ))
             ->add('expiryDate', DateType::class, array(
-                'widget' => 'choice',)
-            )
+                'label' => 'Termin',
+                'data' => date_modify(new \DateTime(), '+1 week')
+            ))
             ->add('priority', ChoiceType::class, array(
                 'label' => 'Priorytet',
+
                 'choices' => array(
                     'Wysoki' => 'priorityHigh',
                     'Normalny' => 'priorityNormal',
                     'Niski' => 'priorityLow'
-                )
+                ),
+                'data' => 'priorityNormal'
             ))
-            ->add('note', TextType::class, array(
+            ->add('note', TextareaType::class, array(
                 'label' => 'Notatka'
             ))
-            ->add('user_added', EntityType::class, array(
-                'class' => 'AppBundle\Entity\User',
-                'data' => $currentUser,
-                'disabled' => true
+            ->add('user_added', HiddenType::class, array(
+                'data' => $currentUser
             ))
             ->add('user_responsible', EntityType::class, array(
                 'label' => 'Użytkownik odpowiedzialny',
@@ -55,7 +59,9 @@ class TopicType extends AbstractType
                 'choice_label' => 'username',
                 'data' => $currentUser,
             ))
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, array(
+                'label' => 'Zapisz'
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
