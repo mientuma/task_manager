@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Topic
@@ -25,6 +26,14 @@ class Topic
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "Nazwa tematu musi składać się z minimum {{ limit }} znaków",
+     *      maxMessage = "Nazwa tematu może składać się z maksymalnie {{ limit }} znaków"
+     * )
      */
     private $name;
 
@@ -32,6 +41,8 @@ class Topic
      * @var \DateTime
      *
      * @ORM\Column(name="dateAdded", type="date")
+     *
+     * @Assert\NotBlank()
      */
     private $dateAdded;
 
@@ -39,6 +50,10 @@ class Topic
      * @var \DateTime
      *
      * @ORM\Column(name="expiryDate", type="date")
+     *
+     * @Assert\NotBlank()
+     *
+     * @Assert\GreaterThanOrEqual("today", message="Termin danego tematu musi być ustawiony co najmniej na ten sam dzień")
      */
     private $expiryDate;
 
@@ -46,6 +61,8 @@ class Topic
      * @var string
      *
      * @ORM\Column(name="priority", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $priority;
 
@@ -53,6 +70,12 @@ class Topic
      * @var string
      *
      * @ORM\Column(name="note", type="string", length=5000, nullable=true)
+     *
+     * @Assert\Length(
+     *     max="5000",
+     *     maxMessage="Długość notatki nie może przekraczać 5000 znaków"
+     * )
+     *
      */
     private $note;
 
