@@ -9,7 +9,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,22 +25,20 @@ class TopicType extends AbstractType
     {
         $user = $options['user'];
 
-        dump($user);
-
         $builder
             ->add('name', TextType::class, array(
-                'label' => 'Nazwa'
+                'label' => 'Nazwa:'
             ))
             ->add('dateAdded', DateType::class, array(
-                'label' => 'Data dodania',
                 'data' => new \DateTime()
             ))
             ->add('expiryDate', DateType::class, array(
-                'label' => 'Termin',
+                'label' => 'Termin:',
+                'format' => 'ddMMyyyy',
                 'data' => date_modify(new \DateTime(), '+1 week')
             ))
             ->add('priority', ChoiceType::class, array(
-                'label' => 'Priorytet',
+                'label' => 'Priorytet:',
 
                 'choices' => array(
                     'Wysoki' => 'priorityHigh',
@@ -51,7 +48,7 @@ class TopicType extends AbstractType
                 'data' => 'priorityNormal'
             ))
             ->add('note', TextareaType::class, array(
-                'label' => 'Notatka',
+                'label' => 'Notatka:',
                 'required' => false
             ))
             ->add('user_added', EntityType::class, array(
@@ -59,7 +56,7 @@ class TopicType extends AbstractType
                 'data' => $user
             ))
             ->add('user_responsible', EntityType::class, array(
-                'label' => 'Użytkownik odpowiedzialny',
+                'label' => 'Użytkownik odpowiedzialny:',
                 'class' => 'AppBundle\Entity\User',
                 'data' => $user,
             ))

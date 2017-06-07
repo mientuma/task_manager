@@ -7,10 +7,11 @@
 {% block body %}
     {{ form_start(form) }}
     {{ form_row(form.name) }}
-    {{ form_row(form.dateAdded) }}
+<div style="display: none;">{{ form_row(form.dateAdded) }}</div>
     {{ form_row(form.expiryDate) }}
     {{ form_row(form.priority) }}
     {{ form_row(form.user_responsible) }}
+<div style="display: none;">{{ form_row(form.user_added) }}</div>
     {{ form_row(form.note) }}
     {{ form_row(form.save) }}
     {{ form_end(form) }}

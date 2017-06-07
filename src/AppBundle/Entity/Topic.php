@@ -38,7 +38,7 @@ class Topic
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expiryDate", type="date", nullable=true)
+     * @ORM\Column(name="expiryDate", type="date")
      */
     private $expiryDate;
 

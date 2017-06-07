@@ -30,9 +30,8 @@ class TopicsController extends Controller
     public function topicsAddAction(Request $request)
     {
         $topic = new Topic();
-        $user = $this->getUser();
         $form = $this->createForm(TopicType::class, $topic, [
-            'user' => $user
+            'user' => $this->getUser()
         ]);
 
         $form->handleRequest($request);
