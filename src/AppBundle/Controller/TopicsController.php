@@ -13,12 +13,30 @@ use Symfony\Component\HttpFoundation\Request;
 class TopicsController extends Controller
 {
     /**
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/topics", name="topics")
      * @Security("has_role('ROLE_USER')")
      */
     public function topicsAction()
     {
-        return $this->render('topics/topics.html.twig');
+        $topics = $this->get('doctrine')->getManager()->getRepository('AppBundle:Topic')->findAll();
+        return $this->render('topics/topics.html.twig', array(
+            'topics' => $topics
+        ));
+    }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/topics/topic/{id}", name="topicsShow")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function topicsShowAction($id)
+    {
+        $topic = $this->get('doctrine')->getManager()->getRepository('AppBundle:Topic')->find($id);
+        return $this->render('topics/topicsShow.html.twig', array(
+            'topic' => $topic
+        ));
     }
 
     /**

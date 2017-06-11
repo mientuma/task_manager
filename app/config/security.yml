@@ -17,6 +17,9 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
         main:
             pattern: ^/
             form_login:

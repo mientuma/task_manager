@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+    <div class="standardMargin"><a href="{{ asset(path('topics')) }}" class="btn btn-default" role="button">Powrót</a></div>
     {{ form_start(form) }}
     {{ form_row(form.name) }}
 <div style="display: none;">{{ form_row(form.dateAdded) }}</div>

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div class="standardMargin"><a href="{{ asset(path('topics')) }}" class="btn btn-default" role="button">Powrót</a></div>
+    {{ topic.name }}
+    {{ topic.priority }}
+    {{ topic.expiryDate|date("d.m.Y") }}
+{% endblock %}

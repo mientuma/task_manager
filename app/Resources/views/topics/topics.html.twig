@@ -1,11 +1,30 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-<style>
-
-</style>
 {% endblock %}
 
 {% block body %}
         <a href="{{ asset(path('topicsAdd')) }}" class="btn btn-primary btn-block" role="button">Dodaj</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nazwa</th>
+                <th>Priorytet</th>
+                <th>Termin</th>
+                <th>Szczegóły</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for topic in topics %}
+            <tr>
+            <th scope="row">{{ loop.index }}.</th>
+            <td>{{ topic.name }}</td>
+            <td>{{ topic.priority }}</td>
+            <td>{{ topic.expiryDate|date("d.m.Y") }}</td>
+            <td><a href="{{ asset(path('topicsShow', {'id':topic.id})) }}" class="btn btn-default" role="button">Pokaż</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
