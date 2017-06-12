@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class TopicRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllAccepted()
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('t')
+            ->from('AppBundle:Topic', 't')
+            ->where('t.accepted = 1')
+            ->orderBy('t.dateAdded', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

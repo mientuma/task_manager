@@ -79,6 +79,14 @@ class Topic
      */
     private $note;
 
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="accepted", type="boolean")
+     */
+    private $accepted;
+
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="addedTopic")
      * @ORM\JoinColumn(name="user_added", referencedColumnName="id")
@@ -219,6 +227,30 @@ class Topic
     public function getNote()
     {
         return $this->note;
+    }
+
+    /**
+     * Set accepted
+     *
+     * @param boolean $accepted
+     *
+     * @return Topic
+     */
+    public function setAccepted($accepted)
+    {
+        $this->accepted = $accepted;
+
+        return $this;
+    }
+
+    /**
+     * Get accepted
+     *
+     * @return bool
+     */
+    public function getAccepted()
+    {
+        return $this->accepted;
     }
 
     /**

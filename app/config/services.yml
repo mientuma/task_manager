@@ -4,6 +4,11 @@ parameters:
     #parameter_name: value
 
 services:
-    #service_name:
-    #    class: AppBundle\Directory\ClassName
-    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    app.topic.service:
+        class: AppBundle\Service\TopicService
+        arguments: ['@doctrine.orm.entity_manager', '@topic']
+
+
+
+    topic:
+        class: AppBundle\Entity\Topic

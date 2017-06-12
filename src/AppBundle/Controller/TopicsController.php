@@ -19,7 +19,7 @@ class TopicsController extends Controller
      */
     public function topicsAction()
     {
-        $topics = $this->get('doctrine')->getManager()->getRepository('AppBundle:Topic')->findAll();
+        $topics = $this->get('doctrine')->getManager()->getRepository('AppBundle:Topic')->findAllAccepted();
         return $this->render('topics/topics.html.twig', array(
             'topics' => $topics
         ));
@@ -57,9 +57,7 @@ class TopicsController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $topic = $form->getData();
-            $em = $this->get('doctrine')->getManager();
-            $em->persist($topic);
-            $em->flush();
+            $this->get('app.topic.service')->resolveTopic($topic);
         }
 
         return $this->render('topics/topicsAdd.html.twig', array(
