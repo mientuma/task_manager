@@ -11,11 +11,15 @@ class TopicService
 {
     private $em;
     private $topic;
+    private $mailer;
+    private $token;
 
-    public function __construct(EntityManager $entityManager, Topic $topic)
+    public function __construct(EntityManager $entityManager, Topic $topic, \Swift_Mailer $mailer)
     {
         $this->em = $entityManager;
         $this->topic = $topic;
+        $this->mailer = $mailer;
+        $this->token = md5(uniqid(rand(), true));
     }
 
     public function addToDataBase($topic)
@@ -24,18 +28,29 @@ class TopicService
         $this->em->flush();
     }
 
-    public function checkUser($userAdded, $userResponsible, $topic)
+    public function checkUser($topic)
     {
-        if ($userAdded == $userResponsible)
+        $this->topic = $topic;
+        $userAdded = $this->topic->getUserAdded();
+        $userResponsible = $this->topic->getUserResponsible();
+
+        if ($userAdded === $userResponsible)
         {
-            $this->topic = $topic;
             $this->topic->setAccepted(true);
-            $this->addToDataBase($this->topic);
         }
 
         else
         {
-            $this->addToDataBase($topic);
+            $this->addToDataBase($this->topic);
+            $topic = $this->em->getRepository('AppBundle:Topic')->findLastRecord();
+            $this->topic = $topic;
+            $topicId = $this->topic->getId();
+            $message = \Swift_Message::newInstance()
+                ->setSubject("Użytkownik ".$userAdded." przypisał Ci nowe zadanie numer #".$topicId)
+                ->setFrom('hpnorek@gmail.com')
+                ->setTo('mientuma@gmail.com')
+                ->setBody($this->token);
+            $this->mailer->send($message);
         }
     }
 
@@ -44,7 +59,7 @@ class TopicService
         $this->topic = $topic;
         $userAdded = $this->topic->getUserAdded();
         $userResponsible = $this->topic->getUserResponsible();
-        $this->checkUser($userAdded, $userResponsible, $topic);
+        $this->checkUser($topic);
     }
 
 

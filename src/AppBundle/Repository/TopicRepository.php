@@ -21,4 +21,16 @@ class TopicRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findLastRecord()
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('t')
+            ->from('AppBundle:Topic', 't')
+            ->setMaxResults(1)
+            ->orderBy('t.id', 'DESC');
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }
