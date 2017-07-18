@@ -28,6 +28,13 @@ class TopicService
         $this->em->flush();
     }
 
+    public function setTopicAccepted($topic)
+    {
+        $this->topic = $topic;
+        $this->topic->setAccepted(true);
+        $this->addToDataBase($this->topic);
+    }
+
     public function checkUser($topic)
     {
         $this->topic = $topic;
@@ -37,10 +44,12 @@ class TopicService
         if ($userAdded === $userResponsible)
         {
             $this->topic->setAccepted(true);
+            $this->addToDataBase($this->topic);
         }
 
         else
         {
+            $this->topic->setHash($this->token);
             $this->addToDataBase($this->topic);
             $topic = $this->em->getRepository('AppBundle:Topic')->findLastRecord();
             $this->topic = $topic;
@@ -49,7 +58,7 @@ class TopicService
                 ->setSubject("Użytkownik ".$userAdded." przypisał Ci nowe zadanie numer #".$topicId)
                 ->setFrom('hpnorek@gmail.com')
                 ->setTo('mientuma@gmail.com')
-                ->setBody($this->token);
+                ->setBody("http://localhost:8000/topics/accept/hash=".$this->token);
             $this->mailer->send($message);
         }
     }
@@ -57,8 +66,6 @@ class TopicService
     public function resolveTopic($topic)
     {
         $this->topic = $topic;
-        $userAdded = $this->topic->getUserAdded();
-        $userResponsible = $this->topic->getUserResponsible();
         $this->checkUser($topic);
     }
 

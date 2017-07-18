@@ -33,4 +33,5 @@ class TopicRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
 }

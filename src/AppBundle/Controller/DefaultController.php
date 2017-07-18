@@ -14,8 +14,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $record = $this->getDoctrine()->getRepository('AppBundle:Topic')->findLastRecord();
-        dump($record);
         return $this->render('default/index.html.twig');
     }
 }

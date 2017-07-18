@@ -6,6 +6,11 @@
 
 {% block body %}
     <div class="main">
+        {% for flash_message in app.session.flashBag.get('notice') %}
+            <div class="flash-notice">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
         <div class="topics">
             <a href="{{ asset(path('topics')) }}"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span><div class="spacing"></div>Tematy bieżące</a>
         </div>

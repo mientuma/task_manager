@@ -88,6 +88,13 @@ class Topic
     private $accepted;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="hash", type="string", length=255, nullable=true)
+     */
+    private $hash;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="addedTopic")
      * @ORM\JoinColumn(name="user_added", referencedColumnName="id")
      */
@@ -203,6 +210,30 @@ class Topic
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * Set hash
+     *
+     * @param string $hash
+     *
+     * @return Topic
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+
+        return $this;
+    }
+
+    /**
+     * Get hash
+     *
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
     }
 
     /**

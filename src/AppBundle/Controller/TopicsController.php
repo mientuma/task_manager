@@ -64,4 +64,30 @@ class TopicsController extends Controller
             'form' => $form->createView()
         ));
     }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/topics/accept/hash={hash}", name="topicsHash")
+     * @Security("has_role('ROLE_USER')")
+     * @throws \Exception
+     */
+    public function topicsAcceptAction(Request $request)
+    {
+        $hash = $request->get('hash');
+        $topic = $this->getDoctrine()->getRepository('AppBundle:Topic')->findOneByhash($hash);
+        if($topic)
+        {
+            $this->get('app.topic.service')->setTopicAccepted($topic);
+            $this->addFlash(
+                'notice',
+                'Zadanie zostało zaakceptowane!'
+            );
+            return $this->redirectToRoute('homepage');
+        }
+        else
+        {
+            throw new \Exception('Podałeś nieprawidłowy link');
+        }
+    }
 }
