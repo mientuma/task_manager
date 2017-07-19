@@ -10,32 +10,28 @@ use Doctrine\ORM\EntityManager;
 class TopicService
 {
     private $em;
+    private $atdb;
     private $topic;
     private $mailer;
     private $token;
 
-    public function __construct(EntityManager $entityManager, Topic $topic, \Swift_Mailer $mailer)
+    public function __construct(EntityManager $entityManager, Topic $topic, \Swift_Mailer $mailer, AddToDbService $atdb)
     {
+        $this->atdb = $atdb;
         $this->em = $entityManager;
         $this->topic = $topic;
         $this->mailer = $mailer;
         $this->token = md5(uniqid(rand(), true));
     }
 
-    public function addToDataBase($topic)
-    {
-        $this->em->persist($topic);
-        $this->em->flush();
-    }
-
     public function setTopicAccepted($topic)
     {
         $this->topic = $topic;
         $this->topic->setAccepted(true);
-        $this->addToDataBase($this->topic);
+        $this->atdb->addToDatabase($this->topic);
     }
 
-    public function checkUser($topic)
+    public function resolveTopic($topic)
     {
         $this->topic = $topic;
         $userAdded = $this->topic->getUserAdded();
@@ -43,15 +39,14 @@ class TopicService
 
         if ($userAdded === $userResponsible)
         {
-            $this->topic->setAccepted(true);
-            $this->addToDataBase($this->topic);
+            $this->setTopicAccepted($topic);
         }
 
         else
         {
             $this->topic->setHash($this->token);
-            $this->addToDataBase($this->topic);
-            $topic = $this->em->getRepository('AppBundle:Topic')->findLastRecord();
+            $this->atdb->addToDatabase($this->topic);
+            $topic = $this->em->getRepository('AppBundle:Topic')->find($this->topic);
             $this->topic = $topic;
             $topicId = $this->topic->getId();
             $message = \Swift_Message::newInstance()
@@ -61,12 +56,6 @@ class TopicService
                 ->setBody("http://localhost:8000/topics/accept/hash=".$this->token);
             $this->mailer->send($message);
         }
-    }
-
-    public function resolveTopic($topic)
-    {
-        $this->topic = $topic;
-        $this->checkUser($topic);
     }
 
 

@@ -6,7 +6,11 @@ parameters:
 services:
     app.topic.service:
         class: AppBundle\Service\TopicService
-        arguments: ['@doctrine.orm.entity_manager', '@topic','@swiftmailer.mailer']
+        arguments: ['@doctrine.orm.entity_manager', '@topic','@swiftmailer.mailer', '@app.add.to.db.service']
+
+    app.add.to.db.service:
+        class: AppBundle\Service\AddToDbService
+        arguments: ['@doctrine.orm.entity_manager']
 
     topic:
         class: AppBundle\Entity\Topic

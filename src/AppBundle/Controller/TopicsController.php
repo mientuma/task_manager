@@ -75,7 +75,7 @@ class TopicsController extends Controller
     public function topicsAcceptAction(Request $request)
     {
         $hash = $request->get('hash');
-        $topic = $this->getDoctrine()->getRepository('AppBundle:Topic')->findOneByhash($hash);
+        $topic = $this->getDoctrine()->getRepository('AppBundle:Topic')->findOneByHash($hash);
         if($topic)
         {
             $this->get('app.topic.service')->setTopicAccepted($topic);

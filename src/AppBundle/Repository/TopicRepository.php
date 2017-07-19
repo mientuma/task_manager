@@ -34,4 +34,16 @@ class TopicRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function findOneByHash($hash)
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('t')
+            ->from('AppBundle:Topic', 't')
+            ->where('t.hash = :hash')
+            ->setParameter('hash', $hash);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
 }
